@@ -8,5 +8,3 @@ description = "Remove rust-style line and block comments from a char iterator."
 #homepage = "TODO CRATES LINK"
 repository = "github.com/gorilskij/without-comments"
 readme = "README.md"
-
-#[dependencies]
