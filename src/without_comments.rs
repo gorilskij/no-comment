@@ -136,7 +136,7 @@ pub trait IntoWithoutComments where Self: Sized + Iterator<Item=char> {
     /// # Example
     ///
     /// ```
-    /// use without_comments::IntoWithoutComments;
+    /// use no_comment::IntoWithoutComments;
     /// let with_comments = "S/*he */be/*lie*/ve//d";
     /// let without_comments = with_comments.chars().without_comments().collect::<String>();
     /// assert_eq!(&without_comments, "Sbeve");

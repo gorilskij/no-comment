@@ -1,10 +1,10 @@
 [package]
-name = "without-comments"
+name = "no-comment"
 version = "0.0.1"
 authors = ["gorilskij <github.com/gorilskij>"]
 edition = "2018"
 license = "Apache-2.0"
 description = "Remove rust-style line and block comments from a char iterator."
-#homepage = "TODO CRATES LINK"
-repository = "github.com/gorilskij/without-comments"
+homepage = "https://crates.io/crates/no-comment"
+repository = "https://github.com/gorilskij/no-comment"
 readme = "README.md"
