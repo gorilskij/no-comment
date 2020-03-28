@@ -72,7 +72,6 @@ impl<I: Iterator<Item=char>> WithoutComments<I> {
 
         match (self.hold.unwrap(), next) {
             ('/', '/') => {
-                // no self.hold = None?
                 self.hold = None;
                 while let Some(c) = self.iter.next() {
                     if c == '\n' {
