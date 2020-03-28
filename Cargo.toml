@@ -1,5 +1,5 @@
 [package]
-name = "without_comments"
+name = "without-comments"
 version = "0.0.1"
 authors = ["gorilskij <github.com/gorilskij>"]
 edition = "2018"
