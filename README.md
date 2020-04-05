@@ -1,5 +1,6 @@
 # No Comment
 
+![Version](https://img.shields.io/badge/Version-0.0.1-red.svg)
 ![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
 
 Remove rust-style line and block comments from a `char` iterator.
