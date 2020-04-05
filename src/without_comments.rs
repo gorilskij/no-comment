@@ -82,40 +82,6 @@ pub struct WithoutComments<I: Iterator<Item = char>> {
     state: Option<(usize, Option<usize>)>,
 }
 
-/// Called after a `/*` has been read. Reads iterator until matching `*/` including nested block
-/// comments and dumps the output. The next item returned by the iterator would be the character
-/// straight after `*/` or `None` if `*/` occurs last or never occurs.
-// TODO reimplement
-// fn exhaust_block_comment(iter: &mut impl Iterator<Item = char>) {
-//     let mut depth = 0_usize;
-//     let mut last_read = None;
-//     for c in iter {
-//         match c {
-//             '*' => match last_read {
-//                 Some('/') => {
-//                     depth += 1;
-//                     last_read = None;
-//                 }
-//                 _ => last_read = Some('*'),
-//             },
-//
-//             '/' => match last_read {
-//                 Some('*') => {
-//                     if depth == 0 {
-//                         return;
-//                     } else {
-//                         depth -= 1;
-//                         last_read = None;
-//                     }
-//                 }
-//                 _ => last_read = Some('/'),
-//             },
-//
-//             c => last_read = Some(c),
-//         }
-//     }
-// }
-
 impl<I: Iterator<Item = char>> WithoutComments<I> {
     fn new(mut iter: I, comments: Box<[Comment]>, buf_len: usize) -> Self {
         let mut buf = Buf::new(buf_len);
@@ -142,8 +108,12 @@ impl<I: Iterator<Item = char>> WithoutComments<I> {
             return Tription::None;
         }
 
+        println!("state: {:?}", self.state);
+        println!("buf: {:?}", self.buf);
+        println!();
+
         // if in comment
-        if let Some((idx, ref mut nest_depth)) = self.state {
+        if let Some((idx, ref mut nesting)) = self.state {
             let comment = &self.comments[idx];
             let &Comment {
                 open_pat,
@@ -160,13 +130,13 @@ impl<I: Iterator<Item = char>> WithoutComments<I> {
                     self.buf.pop_front_n(close_pat.len());
                 }
 
-                match nest_depth {
+                match nesting {
                     // non-nesting comment or top-level comment
                     None | Some(0) => self.state = None,
                     // nested comment
                     Some(d) => *d -= 1,
                 }
-            } else if let Some(depth) = nest_depth {
+            } else if let Some(depth) = nesting {
                 if self.buf.matches(open_pat) {
                     // matched nesting open pattern
                     self.buf.pop_front_n(open_pat.len());
