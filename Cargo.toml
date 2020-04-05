@@ -8,3 +8,6 @@ description = "Remove rust-style line and block comments from a char iterator."
 homepage = "https://crates.io/crates/no-comment"
 repository = "https://github.com/gorilskij/no-comment"
 readme = "README.md"
+
+[dependencies]
+derive_more = "0.99.5"

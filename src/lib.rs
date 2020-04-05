@@ -1,11 +1,19 @@
-pub use crate::without_comments::{WithoutComments, IntoWithoutComments};
+#[macro_use]
+extern crate derive_more;
+
+pub use without_comments::{IntoWithoutComments, WithoutComments};
+
+// TODO redocument
+
+pub mod languages;
 
 mod without_comments;
 
 #[cfg(test)]
 mod tests {
     use super::IntoWithoutComments;
-    
+    use crate::languages;
+
     #[test]
     fn test_no_comments() {
         let strings = [
@@ -24,24 +32,31 @@ mod tests {
             "          ",
             "",
         ];
-        
+
         for string in strings.iter() {
             let without_comments = string
                 .chars()
-                .without_comments()
+                .without_comments(languages::rust())
                 .collect::<String>();
-            
-            assert_eq!(&without_comments, string);
+
+            assert_eq!(
+                &without_comments, string,
+                "\"{}\" should be \"{}\"",
+                without_comments, string
+            );
         }
     }
-    
+
     #[test]
     fn test_line_comments() {
         let strings = [
             ("With a line comment // this is it", "With a line comment "), // note the trailing space
             ("3 /// should work", "3 "),
             ("4 //// //", "4 "),
-            ("With close block// */ would panic if it were text", "With close block"),
+            (
+                "With close block// */ would panic if it were text",
+                "With close block",
+            ),
             ("// Just comment", ""),
             ("//", ""),
             ("///", ""),
@@ -49,17 +64,17 @@ mod tests {
             ("//\n//\n", "\n\n"),
             ("Not a block //* */ still line comment", "Not a block "),
         ];
-        
+
         for (string, check) in strings.iter() {
             let without_comments = string
                 .chars()
-                .without_comments()
+                .without_comments(languages::rust())
                 .collect::<String>();
-            
+
             assert_eq!(&without_comments, check);
         }
     }
-    
+
     #[test]
     fn test_block_comments() {
         let strings = [
@@ -70,30 +85,36 @@ mod tests {
             ("Auto-close/* unclosed", "Auto-close"),
             ("With/*\n*/ a newline", "With a newline"),
             ("Nested /* \n /* \n */ \n */newlines", "Nested newlines"),
-            ("Line comment/* // this one */ ignored", "Line comment ignored"),
+            (
+                "Line comment/* // this one */ ignored",
+                "Line comment ignored",
+            ),
             ("/**/", ""),
             ("/*~*/", ""),
             ("/*\n\t//\nstill a comment*/", ""),
             ("One /* one *//* two */ Two", "One  Two"),
             ("A/* /* one *//* two *//* three /**/*/ */B", "AB"),
         ];
-        
+
         for (string, check) in strings.iter() {
             let without_comments = string
                 .chars()
-                .without_comments()
+                .without_comments(languages::rust())
                 .collect::<String>();
-            
+
             assert_eq!(&without_comments, check);
         }
     }
-    
+
     #[test]
     #[should_panic]
     fn test_block_comments_panic() {
-        let _ = "*/".chars().without_comments().collect::<String>();
+        let _ = "*/"
+            .chars()
+            .without_comments(languages::rust())
+            .collect::<String>();
     }
-    
+
     #[test]
     fn test_combined() {
         let strings = [
@@ -104,13 +125,13 @@ mod tests {
             ("/*S*/he /*be*/lie/*ve*/d", "he lied"),
             ("S/*he */be/*lie*/ve//d", "Sbeve"),
         ];
-        
+
         for (string, check) in strings.iter() {
             let without_comments = string
                 .chars()
-                .without_comments()
+                .without_comments(languages::rust())
                 .collect::<String>();
-                
+
             assert_eq!(&without_comments, check);
         }
     }
