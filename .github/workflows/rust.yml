@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions-rs/checkout@v2
       - name: Stable build
         run: cargo +stable build --verbose
       - name: Stable test
