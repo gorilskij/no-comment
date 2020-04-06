@@ -13,7 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build
+    - name: Build latest stable
       run: cargo build --verbose
-    - name: Run tests
-      run: cargo tests --verbose
+    - name: Build 1.36.0
+      run: cargo +1.36.0 build --verbose
+    - name: Run tests latest stable
+      run: cargo test --verbose
+    - name: Run tests 1.36.0
+      run: cargo +1.36.0 test -- verbose
