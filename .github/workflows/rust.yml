@@ -33,7 +33,7 @@ jobs:
             toolchain: nightly
             command: build --verbose
       - name: Nightly test
-          uses: actions-rs/toolchain@v1.0.6
-          with:
+        uses: actions-rs/toolchain@v1.0.6
+        with:
             toolchain: nightly
             command: test --verbose
