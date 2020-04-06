@@ -12,12 +12,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build latest stable
-      run: cargo build --verbose
-    - name: Build 1.36.0
-      run: cargo +1.36.0 build --verbose
-    - name: Run tests latest stable
-      run: cargo test --verbose
-    - name: Run tests 1.36.0
-      run: cargo +1.36.0 test -- verbose
+      - uses: actions-rs/checkout@v2
+      - name: Stable build
+        run: cargo +stable build --verbose
+      - name: Stable test
+        run: cargo +stable test --verbose
+      - name: 1.36.0 build
+        uses: actions-rs/toolchain@v1.0.6
+        with:
+            toolchain: 1.36.0
+            command: build --verbose
+      - name: 1.36.0 test
+        uses: actions-rs/toolchain@v1.0.6
+        with:
+            toolchain: 1.36.0
+            command: test --verbose
+      - name: Nightly build
+        uses: actions-rs/toolchain@v1.0.6
+        with:
+            toolchain: nightly
+            command: build --verbose
+      - name: Nightly test
+          uses: actions-rs/toolchain@v1.0.6
+          with:
+            toolchain: nightly
+            command: test --verbose
