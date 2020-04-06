@@ -1,6 +1,5 @@
-use lazy_static::lazy_static;
-use crate::IntoWithoutComments;
 use crate::languages::rust;
+use crate::IntoWithoutComments as _;
 
 #[test]
 fn test_no_comments() {
@@ -27,10 +26,7 @@ fn test_no_comments() {
     ];
 
     for string in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(rust())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(rust()).collect::<String>();
 
         assert_eq!(
             &without_comments, string,
@@ -57,16 +53,17 @@ fn test_line_comments() {
         ("A//\nB", "A\nB"),
         ("//\n//\n", "\n\n"),
         ("Not a block //* */ still line comment", "Not a block "),
+        (
+            "String literals \"//\" are ignored, this is a comment",
+            "String literals \"",
+        ),
     ];
 
-        for (string, check) in strings.iter() {
-            let without_comments = string
-                .chars()
-                .without_comments(rust())
-                .collect::<String>();
+    for (string, check) in strings.iter() {
+        let without_comments = string.chars().without_comments(rust()).collect::<String>();
 
-            assert_eq!(&without_comments, check);
-        }
+        assert_eq!(&without_comments, check);
+    }
 }
 
 #[test]
@@ -88,13 +85,14 @@ fn test_block_comments() {
         ("/*\n\t//\nstill a comment*/", ""),
         ("One /* one *//* two */ Two", "One  Two"),
         ("A/* /* one *//* two *//* three /**/*/ */B", "AB"),
+        (
+            "String literals /* comment \" */are ignored",
+            "String literals are ignored",
+        ),
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(rust())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(rust()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -103,10 +101,7 @@ fn test_block_comments() {
 #[test]
 #[should_panic]
 fn test_block_comment_close_panic() {
-    let _ = "*/"
-        .chars()
-        .without_comments(rust())
-        .collect::<String>();
+    let _ = "*/".chars().without_comments(rust()).collect::<String>();
 }
 
 #[test]
@@ -122,10 +117,7 @@ fn test_block_and_line_together() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(rust())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(rust()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }

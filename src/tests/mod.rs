@@ -1,4 +1,4 @@
-mod rust;
 mod c;
-mod python;
 mod haskell;
+mod python;
+mod rust;

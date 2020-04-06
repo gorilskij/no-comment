@@ -1,12 +1,16 @@
 # No Comment
 
 ![Version](https://img.shields.io/badge/Version-0.0.1-red.svg)
-![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
+![Minimum Rust version: 1.36](https://img.shields.io/badge/Minimum%20Rust%20Version-1.36-brightgreen.svg)
 
-Remove rust-style line and block comments from a `char` iterator.
+Remove comments from a `char` iterator.
 
 This crate provides the `WithoutComments` iterator and the `IntoWithoutComments` trait implemented for
-all `Iterator<Item=char>` providing the `without_comments` method.
+all `Iterator<Item=char>` providing the `without_comments` method. Comment specifications are available for
+rust-style, c-style, python-style, and haskell-style line and block comments, a way to specify custom
+comment specifications is planned. This crate is intended to be used for removing comments from text,
+not from code, for this reason, `"\*"` will still open a block comment in rust mode because string literals
+have no semantic significance.
 
 ## Usage
 
@@ -21,11 +25,12 @@ main.rs:
 ```rust
 fn main() {
         use std::fs::read_to_string;
+        use no_comment::{IntoWithoutComments as _, languages};
 
         let without_comments = read_to_string("tests.txt")
             .unwrap()
             .chars()
-            .without_comments()
+            .without_comments(languages::rust())
             .collect::<String>();
 
         println!("{}", without_comments);
@@ -34,11 +39,11 @@ fn main() {
 
 test.txt:
 ```text
-This is text // this is a line comment
-This is more text /* this is a block comment
+This is text // this is a (rust) line comment
+This is more text /* this is a (rust) block comment
 /* this one is nested */ */
 This is text again
-/* If a block comment is left open, it keeps
+/* If a comment is left open, it keeps
 going until the end.
 ```
 
@@ -59,7 +64,3 @@ This·is·more·text·¶
 This·is·text·again¶
 
 ```
-
-## Dependencies
-
-This crate has no external dependencies

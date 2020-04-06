@@ -1,5 +1,8 @@
 use crate::without_comments::Comment;
 
+/// Macro to generate getter a function from a constant like `fn rust() -> Box[Comment]` from
+/// `const RUST: [Comment; 2]`. These getters are the only public interface of this module,
+/// used as no_comment::languages::rust(), etc.
 macro_rules! make_getter {
     (const $c:ident: [Comment; $_:expr], pub fn $f:ident) => {
         #[allow(dead_code)]

@@ -1,6 +1,5 @@
-use lazy_static::lazy_static;
-use crate::IntoWithoutComments;
 use crate::languages::python;
+use crate::IntoWithoutComments as _;
 
 #[test]
 fn test_no_comments() {
@@ -60,6 +59,10 @@ fn test_line_comments() {
             "text#comment#still comment'''same comment'''comment",
             "text",
         ),
+        (
+            "String literals \"#\" are ignored, this is a comment",
+            "String literals \"",
+        ),
     ];
 
     for (string, check) in strings.iter() {
@@ -99,6 +102,10 @@ fn test_block_comments() {
         ("'''\n\t//\nstill'\"\"\"''a comment'''", ""),
         ("One ''' one '''''' two ''' Two", "One  Two"),
         ("A''''' <- first 3 open, next 2 ignored '''B", "AB"),
+        (
+            "String \" literals ''' comment \" '''are ignored",
+            "String \" literals are ignored",
+        ),
     ];
 
     for (string, check) in strings.iter() {

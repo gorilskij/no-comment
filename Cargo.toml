@@ -11,4 +11,3 @@ readme = "README.md"
 
 [dependencies]
 derive_more = "0.99.5"
-lazy_static = "1.4.0"
