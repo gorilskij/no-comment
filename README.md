@@ -22,7 +22,7 @@ main.rs:
 fn main() {
         use std::fs::read_to_string;
 
-        let without_comments = read_to_string("test.txt")
+        let without_comments = read_to_string("tests.txt")
             .unwrap()
             .chars()
             .without_comments()
