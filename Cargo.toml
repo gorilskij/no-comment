@@ -1,6 +1,6 @@
 [package]
 name = "no-comment"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["gorilskij <github.com/gorilskij>"]
 edition = "2018"
 license = "Apache-2.0"
