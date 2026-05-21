@@ -1,4 +1,4 @@
-use no_comment::{languages::haskell, IntoWithoutComments as _};
+use no_comment::{languages::HASKELL, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {
@@ -26,7 +26,7 @@ fn test_no_comments() {
     ];
 
     for string in strings.iter() {
-        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
+        let without_comments = string.chars().without_comments(HASKELL).collect::<String>();
 
         assert_eq!(
             &without_comments, string,
@@ -57,7 +57,7 @@ fn test_line_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
+        let without_comments = string.chars().without_comments(HASKELL).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -86,7 +86,7 @@ fn test_block_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
+        let without_comments = string.chars().without_comments(HASKELL).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -95,7 +95,7 @@ fn test_block_comments() {
 #[test]
 #[should_panic]
 fn test_block_comment_close_panic() {
-    let _ = "-}".chars().without_comments(haskell()).collect::<String>();
+    let _ = "-}".chars().without_comments(HASKELL).collect::<String>();
 }
 
 #[test]
@@ -111,7 +111,7 @@ fn test_block_and_line_together() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
+        let without_comments = string.chars().without_comments(HASKELL).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }

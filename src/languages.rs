@@ -1,24 +1,7 @@
 use crate::without_comments::Comment;
 
-/// Macro to generate getter a function from a constant like `fn rust() -> Box[Comment]` from
-/// `const RUST: [Comment; 2]`. These getters are the only public interface of this module,
-/// used as no_comment::languages::rust(), etc.
-macro_rules! make_getter {
-    (const $c:ident: [Comment; $_:expr], pub fn $f:ident) => {
-        #[allow(dead_code)]
-        pub fn $f() -> Box<[Comment]> {
-            $c.iter().copied().collect::<Vec<_>>().into_boxed_slice()
-        }
-    };
-}
-
-make_getter!(const RUST: [Comment; 2], pub fn rust);
-make_getter!(const C: [Comment; 2], pub fn c);
-make_getter!(const PYTHON: [Comment; 3], pub fn python);
-make_getter!(const HASKELL: [Comment; 2], pub fn haskell);
-
 #[allow(dead_code)]
-const RUST: [Comment; 2] = [
+pub const RUST: [Comment; 2] = [
     Comment {
         open_pat: "//",
         close_pat: "\n",
@@ -36,7 +19,7 @@ const RUST: [Comment; 2] = [
 ];
 
 #[allow(dead_code)]
-const C: [Comment; 2] = [
+pub const C: [Comment; 2] = [
     Comment {
         open_pat: "//",
         close_pat: "\n",
@@ -54,7 +37,7 @@ const C: [Comment; 2] = [
 ];
 
 #[allow(dead_code)]
-const PYTHON: [Comment; 3] = [
+pub const PYTHON: [Comment; 3] = [
     Comment {
         open_pat: "#",
         close_pat: "\n",
@@ -80,7 +63,7 @@ const PYTHON: [Comment; 3] = [
 ];
 
 #[allow(dead_code)]
-const HASKELL: [Comment; 2] = [
+pub const HASKELL: [Comment; 2] = [
     Comment {
         open_pat: "--",
         close_pat: "\n",

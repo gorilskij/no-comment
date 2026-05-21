@@ -1,4 +1,4 @@
-use no_comment::{languages::c, IntoWithoutComments as _};
+use no_comment::{languages::C, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {
@@ -25,7 +25,7 @@ fn test_no_comments() {
     ];
 
     for string in strings.iter() {
-        let without_comments = string.chars().without_comments(c()).collect::<String>();
+        let without_comments = string.chars().without_comments(C).collect::<String>();
 
         assert_eq!(
             &without_comments, string,
@@ -41,10 +41,7 @@ fn test_line_comments() {
         ("With a line comment // this is it", "With a line comment "), // note the trailing space
         ("3 /// should work", "3 "),
         ("4 //// //", "4 "),
-        (
-            "With close block// */ would panic if it were text",
-            "With close block",
-        ),
+        ("With close block// */ would panic if it were text", "With close block"),
         ("Even closer //*}", "Even closer "),
         ("// Just comment", ""),
         ("//", ""),
@@ -58,7 +55,7 @@ fn test_line_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(c()).collect::<String>();
+        let without_comments = string.chars().without_comments(C).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -73,14 +70,8 @@ fn test_block_comments() {
         ("c()on/***/fusing", "c()onfusing"),
         ("Auto-close/* unclosed", "Auto-close"),
         ("With/*\n*/ a newline", "With a newline"),
-        (
-            "Nested /* \n /* <- useless \n */newlines",
-            "Nested newlines",
-        ),
-        (
-            "Line comment/* // this one */ ignored",
-            "Line comment ignored",
-        ),
+        ("Nested /* \n /* <- useless \n */newlines", "Nested newlines"),
+        ("Line comment/* // this one */ ignored", "Line comment ignored"),
         ("/**/", ""),
         ("/*~*/", ""),
         ("/*\n\t//\nstill /* /* a comment*/", ""),
@@ -94,7 +85,7 @@ fn test_block_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(c()).collect::<String>();
+        let without_comments = string.chars().without_comments(C).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -103,7 +94,7 @@ fn test_block_comments() {
 #[test]
 #[should_panic]
 fn test_block_comment_close_panic() {
-    let _ = "*/".chars().without_comments(c()).collect::<String>();
+    let _ = "*/".chars().without_comments(C).collect::<String>();
 }
 
 #[test]
@@ -119,7 +110,7 @@ fn test_block_and_line_together() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(c()).collect::<String>();
+        let without_comments = string.chars().without_comments(C).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }

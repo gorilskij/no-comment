@@ -1,4 +1,4 @@
-use no_comment::{languages::python, IntoWithoutComments as _};
+use no_comment::{languages::PYTHON, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {
@@ -26,7 +26,7 @@ fn test_no_comments() {
     ];
 
     for string in strings.iter() {
-        let without_comments = string.chars().without_comments(python()).collect::<String>();
+        let without_comments = string.chars().without_comments(PYTHON).collect::<String>();
 
         assert_eq!(
             &without_comments, string,
@@ -56,7 +56,7 @@ fn test_line_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(python()).collect::<String>();
+        let without_comments = string.chars().without_comments(PYTHON).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -90,7 +90,7 @@ fn test_block_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(python()).collect::<String>();
+        let without_comments = string.chars().without_comments(PYTHON).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -109,7 +109,7 @@ fn test_block_and_line_together() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string.chars().without_comments(python()).collect::<String>();
+        let without_comments = string.chars().without_comments(PYTHON).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }

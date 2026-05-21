@@ -247,11 +247,12 @@ where
     /// let with_comments = "S/*he */be/*lie*/ve//d";
     /// let without_comments = with_comments
     ///     .chars()
-    ///     .without_comments(languages::rust())
+    ///     .without_comments(languages::RUST)
     ///     .collect::<String>();
     /// assert_eq!(&without_comments, "Sbeve");
     /// ```
-    fn without_comments(self, language: Box<[Comment]>) -> WithoutComments<Self> {
+    fn without_comments<L: Into<Box<[Comment]>>>(self, language: L) -> WithoutComments<Self> {
+        let language = language.into();
         let mut buf_len = 0;
         for &Comment {
             open_pat, close_pat, ..
