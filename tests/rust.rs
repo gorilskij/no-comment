@@ -1,5 +1,4 @@
-use crate::languages::rust;
-use crate::IntoWithoutComments as _;
+use no_comment::{languages::rust, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {
@@ -42,10 +41,7 @@ fn test_line_comments() {
         ("With a line comment // this is it", "With a line comment "), // note the trailing space
         ("3 /// should work", "3 "),
         ("4 //// //", "4 "),
-        (
-            "With close block// */ would panic if it were text",
-            "With close block",
-        ),
+        ("With close block// */ would panic if it were text", "With close block"),
         ("Even closer //*}", "Even closer "),
         ("// Just comment", ""),
         ("//", ""),
@@ -76,10 +72,7 @@ fn test_block_comments() {
         ("Auto-close/* unclosed", "Auto-close"),
         ("With/*\n*/ a newline", "With a newline"),
         ("Nested /* \n /* \n */ \n */newlines", "Nested newlines"),
-        (
-            "Line comment/* // this one */ ignored",
-            "Line comment ignored",
-        ),
+        ("Line comment/* // this one */ ignored", "Line comment ignored"),
         ("/**/", ""),
         ("/*~*/", ""),
         ("/*\n\t//\nstill a comment*/", ""),

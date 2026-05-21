@@ -1,5 +1,4 @@
-use crate::languages::c;
-use crate::IntoWithoutComments as _;
+use no_comment::{languages::c, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {

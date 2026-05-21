@@ -1,6 +1,6 @@
 # No Comment
 
-![Version](https://img.shields.io/badge/Version-0.0.2-red.svg)
+![Version](https://img.shields.io/badge/Version-0.0.3-red.svg)
 ![Minimum Rust version: 1.36](https://img.shields.io/badge/Minimum%20Rust%20Version-1.36-brightgreen.svg)
 
 Remove comments from a `char` iterator.

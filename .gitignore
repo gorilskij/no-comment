@@ -1,8 +1,6 @@
 /target
 Cargo.lock
-
-# CLion
-.idea/
+.rustfmt.toml
 
 # MacOS
 /**/.DS_Store

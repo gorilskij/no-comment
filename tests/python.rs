@@ -1,5 +1,4 @@
-use crate::languages::python;
-use crate::IntoWithoutComments as _;
+use no_comment::{languages::python, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {
@@ -27,10 +26,7 @@ fn test_no_comments() {
     ];
 
     for string in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(python())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(python()).collect::<String>();
 
         assert_eq!(
             &without_comments, string,
@@ -46,19 +42,13 @@ fn test_line_comments() {
         ("With a line comment # this is it", "With a line comment "),
         ("2 ## should work", "2 "),
         ("4 #### ##", "4 "),
-        (
-            "With block# ''' <- would panic if it were text",
-            "With block",
-        ),
+        ("With block# ''' <- would panic if it were text", "With block"),
         ("# Just comment", ""),
         ("#", ""),
         ("##", ""),
         ("A#\nB", "A\nB"),
         ("#\n#\n", "\n\n"),
-        (
-            "text#comment#still comment'''same comment'''comment",
-            "text",
-        ),
+        ("text#comment#still comment'''same comment'''comment", "text"),
         (
             "String literals \"#\" are ignored, this is a comment",
             "String literals \"",
@@ -66,10 +56,7 @@ fn test_line_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(python())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(python()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -79,10 +66,7 @@ fn test_line_comments() {
 fn test_block_comments() {
     let strings = [
         ("With a ''' block ''' comment", "With a  comment"),
-        (
-            "With a \"\"\" different block \"\"\" comment",
-            "With a  comment",
-        ),
+        ("With a \"\"\" different block \"\"\" comment", "With a  comment"),
         ("One ''' in \"\"\" the ''' other", "One  other"),
         ("And \"\"\" the ''' other \"\"\" way", "And  way"),
         // ("Nested /* open pattern /* ignored */ text", "Nested  text"),
@@ -93,10 +77,7 @@ fn test_block_comments() {
         ("And another\"\"\" unprinted", "And another"),
         ("With'''\n''' a newline", "With a newline"),
         ("With\"\"\"\n\n\"\"\" two newlines", "With two newlines"),
-        (
-            "Line comment''' # this one ''' ignored",
-            "Line comment ignored",
-        ),
+        ("Line comment''' # this one ''' ignored", "Line comment ignored"),
         ("''''''", ""),
         ("\"\"\"~\"\"\"", ""),
         ("'''\n\t//\nstill'\"\"\"''a comment'''", ""),
@@ -109,10 +90,7 @@ fn test_block_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(python())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(python()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -131,10 +109,7 @@ fn test_block_and_line_together() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(python())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(python()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }

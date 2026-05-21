@@ -1,5 +1,4 @@
-use crate::languages::haskell;
-use crate::IntoWithoutComments as _;
+use no_comment::{languages::haskell, IntoWithoutComments as _};
 
 #[test]
 fn test_no_comments() {
@@ -27,10 +26,7 @@ fn test_no_comments() {
     ];
 
     for string in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(haskell())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
 
         assert_eq!(
             &without_comments, string,
@@ -46,20 +42,14 @@ fn test_line_comments() {
         ("With a line comment -- this is it", "With a line comment "),
         ("3 --- should work", "3 "),
         ("4 ---- --", "4 "),
-        (
-            "With close block-- -} would panic if it were text",
-            "With close block",
-        ),
+        ("With close block-- -} would panic if it were text", "With close block"),
         ("Even closer ---}", "Even closer "),
         ("-- Just comment", ""),
         ("--", ""),
         ("---", ""),
         ("A--\nB", "A\nB"),
         ("--\n--\n", "\n\n"),
-        (
-            "Not a block --{--} still {- -} line comment",
-            "Not a block ",
-        ),
+        ("Not a block --{--} still {- -} line comment", "Not a block "),
         (
             "String literals \"--\" are ignored, this is a comment",
             "String literals \"",
@@ -67,10 +57,7 @@ fn test_line_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(haskell())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -86,10 +73,7 @@ fn test_block_comments() {
         ("Auto-close{- unclosed", "Auto-close"),
         ("With{-\n-} a newline", "With a newline"),
         ("Nested {- \n {- \n -} \n -}newlines", "Nested newlines"),
-        (
-            "Line comment{- -- this one -} ignored",
-            "Line comment ignored",
-        ),
+        ("Line comment{- -- this one -} ignored", "Line comment ignored"),
         ("{--}", ""),
         ("{-~-}", ""),
         ("{-\n\t//\nstill a comment-}", ""),
@@ -102,10 +86,7 @@ fn test_block_comments() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(haskell())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
@@ -130,10 +111,7 @@ fn test_block_and_line_together() {
     ];
 
     for (string, check) in strings.iter() {
-        let without_comments = string
-            .chars()
-            .without_comments(haskell())
-            .collect::<String>();
+        let without_comments = string.chars().without_comments(haskell()).collect::<String>();
 
         assert_eq!(&without_comments, check);
     }
